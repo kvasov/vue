@@ -1,12 +1,15 @@
 <template>
   <form @submit.prevent>
     <div class="title">New post</div>
-    <input v-model="post.title" type="text" placeholder="name">
-    <input v-model="post.body" type="text" placeholder="desc">
-    <button @click="createPost">Create</button>
+    <my-input v-model="post.title" placeholder="name"/>
+    <my-input v-model="post.body" placeholder="desc"/>
+    <my-button @click="createPost">
+      Create
+    </my-button>
   </form>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -41,18 +44,8 @@ export default {
       font-weight: 500;
     }
 
-    input {
-      margin-bottom: 3px;
-      width: 200px;
-      height: 30px;
-      padding: 3px;
-      font-size: 14px;
-    }
-
     button {
-      margin-top: 6px;
       width: 200px;
-      height: 30px;
     }
   }
 </style>

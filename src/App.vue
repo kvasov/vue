@@ -1,8 +1,10 @@
 <template>
   <div>
     <post-form @create="createPost"/>
-    <post-list :posts="this.posts"/>
-
+    <post-list
+      :posts="this.posts"
+      @remove="removePost"
+    />
   </div>
 </template>
 
@@ -27,6 +29,9 @@ export default {
    methods: {
     createPost(post) {
       this.posts.push(post);
+    },
+    removePost(post) {
+      this.posts = this.posts.filter(p => p.id != post.id)
     }
   }
 }

@@ -3,11 +3,15 @@
     <div><strong>Name: </strong>{{ post.title}}</div>
     <div><strong>Desc: </strong>{{ post.body}}</div>
     <div class="btns">
-      <button>del</button>
+      <my-button @click="$emit('remove', post)">
+        Del
+      </my-button>
     </div>
   </div>
 </template>
+
 <script>
+
 export default {
   props: {
     post: {
@@ -38,6 +42,10 @@ export default {
       position: absolute;
       top: 5px;
       right: 5px;
+
+      button {
+        width: 50px;
+      }
     }
   }
 </style>
