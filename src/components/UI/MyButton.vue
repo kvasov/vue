@@ -10,7 +10,7 @@ export default {
 </script>
 <style scoped lang="scss">
   button {
-    margin-top: 6px;
     height: 30px;
+    padding: 0 10px;
   }
 </style>

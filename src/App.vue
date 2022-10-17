@@ -1,12 +1,17 @@
 <template>
   <div>
-    <my-button @click="showDialog">Create new</my-button>
+    <div class="buttons">
+      <my-button @click="showDialog">Create new</my-button>
+      <my-select v-model="selectedSort" :options="sortOptions">
+
+      </my-select>
+    </div>
     <my-dialog v-model:show="dialogVisible">
       <post-form @create="createPost"/>
     </my-dialog>
 
     <post-list
-      :posts="this.posts"
+      :posts="sortedPosts"
       @remove="removePost"
       v-if="!isPostsLoading"
     />
@@ -28,7 +33,16 @@ export default {
     return {
       posts: [],
       dialogVisible: false,
-      isPostsLoading: false
+      isPostsLoading: false,
+      selectedSort: '',
+      sortOptions: [
+        {
+          value: 'title', name: 'By name'
+        },
+        {
+          value: 'body', name: 'By body'
+        }
+      ]
     }
   },
 
@@ -57,6 +71,20 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+  },
+  computed: {
+    sortedPosts () {
+      return [...this.posts].sort((post1, post2 ) =>  post1[this.selectedSort ]?.localeCompare(post2[this.selectedSort  ])
+      )
+    }
+  },
+  watch: {
+    // selectedSort(newValue) {
+    //   this.posts.sort((post1, post2 ) => {
+    //     return post1[newValue]?.localeCompare(post2[newValue ])
+    //   })
+    //   console.log(newValue);
+    // }
   }
 }
 </script>
@@ -74,6 +102,15 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
+  }
+
+  .buttons {
+    display: flex;
+    align-items: flex-start;
+
+    button {
+      margin-right: 10px;
+    }
   }
 
 
