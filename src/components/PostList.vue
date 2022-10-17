@@ -31,7 +31,7 @@ export default {
   }
   .posts-list-enter-active,
   .posts-list-leave-active {
-    transition: all 1s ease;
+    transition: all .2s ease;
   }
   .posts-list-enter-from,
   .posts-list-leave-to {
@@ -39,6 +39,6 @@ export default {
     transform: translateY(-30px);
   }
   .posts-list-move {
-    transition: transform 0.8s ease;
+    transition: transform 0.2s ease;
   }
 </style>

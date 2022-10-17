@@ -1,6 +1,6 @@
 <template>
   <div class="post">
-    <div><strong>Name: </strong>{{ post.title}}</div>
+    <div><strong>Name: </strong>{{ post.id}} {{ post.title}}</div>
     <div><strong>Desc: </strong>{{ post.body}}</div>
     <div class="btns">
       <my-button @click="$emit('remove', post)">

@@ -3,19 +3,29 @@
     <div class="buttons">
       <my-button @click="showDialog">Create new</my-button>
       <my-select v-model="selectedSort" :options="sortOptions">
-
       </my-select>
     </div>
+    <my-input v-model="searchQuery" />
     <my-dialog v-model:show="dialogVisible">
       <post-form @create="createPost"/>
     </my-dialog>
 
     <post-list
-      :posts="sortedPosts"
+      :posts="sortedAndSearchedPosts"
       @remove="removePost"
       v-if="!isPostsLoading"
     />
     <div v-else>Loading...</div>
+    <div class="pages">
+      <div
+        v-for="pageNum in totalPages"
+        :key="pageNum"
+        :class="{'current': pageNum === this.page}"
+        @click="changePage(pageNum)"
+      >
+          {{pageNum}}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,6 +45,10 @@ export default {
       dialogVisible: false,
       isPostsLoading: false,
       selectedSort: '',
+      searchQuery: '',
+      page: 1,
+      limit: 10,
+      totalPages: 0,
       sortOptions: [
         {
           value: 'title', name: 'By name'
@@ -57,10 +71,19 @@ export default {
     showDialog() {
       this.dialogVisible = true;
     },
+    changePage(pageNum) {
+      this.page = pageNum;
+    },
     async fetchPosts() {
       try {
         this.isPostsLoading = true;
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts?', {
+          params: {
+            _page: this.page,
+            _limit: this.limit
+          }
+        });
+        this.totalPages = Math.ceil(response.headers['x-total-count'] / this.limit)
         this.posts = response.data;
       } catch (e) {
         console.log('error');
@@ -73,18 +96,18 @@ export default {
     this.fetchPosts();
   },
   computed: {
-    sortedPosts () {
+    sortedPosts() {
       return [...this.posts].sort((post1, post2 ) =>  post1[this.selectedSort ]?.localeCompare(post2[this.selectedSort  ])
       )
+    },
+    sortedAndSearchedPosts() {
+      return this.sortedPosts.filter(post => post.title.includes(this.searchQuery))
     }
   },
   watch: {
-    // selectedSort(newValue) {
-    //   this.posts.sort((post1, post2 ) => {
-    //     return post1[newValue]?.localeCompare(post2[newValue ])
-    //   })
-    //   console.log(newValue);
-    // }
+    page() {
+      this.fetchPosts()
+    }
   }
 }
 </script>
@@ -113,7 +136,21 @@ export default {
     }
   }
 
+  .pages {
+    display: flex;
 
+    div {
+      margin-right: 4px;
+      border: 1px solid #ccc;
+      padding: 2px 4px;
+      cursor: pointer;
 
-
+      &.current {
+        background-color: #000;
+        border-color: #000;
+        color: #fff;
+        cursor: default;
+      }
+    }
+  }
 </style>
