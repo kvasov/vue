@@ -9,34 +9,30 @@
     <my-dialog v-model:show="dialogVisible">
       <post-form @create="createPost"/>
     </my-dialog>
-
+    <post-pagination
+      :totalPages="this.totalPages"
+      :currentPage="this.page"
+      @changePage="changePage"
+    />
     <post-list
       :posts="sortedAndSearchedPosts"
       @remove="removePost"
       v-if="!isPostsLoading"
     />
     <div v-else>Loading...</div>
-    <div class="pages">
-      <div
-        v-for="pageNum in totalPages"
-        :key="pageNum"
-        :class="{'current': pageNum === this.page}"
-        @click="changePage(pageNum)"
-      >
-          {{pageNum}}
-      </div>
-    </div>
+
   </div>
 </template>
 
 <script>
 import PostForm from '@/components/PostForm';
 import PostList from '@/components/PostList';
+import PostPagination from '@/components/PostPagination';
 import axios from 'axios';
 
 export default {
   components: {
-    PostForm, PostList
+    PostForm, PostList, PostPagination
   },
 
   data() {
@@ -133,24 +129,6 @@ export default {
 
     button {
       margin-right: 10px;
-    }
-  }
-
-  .pages {
-    display: flex;
-
-    div {
-      margin-right: 4px;
-      border: 1px solid #ccc;
-      padding: 2px 4px;
-      cursor: pointer;
-
-      &.current {
-        background-color: #000;
-        border-color: #000;
-        color: #fff;
-        cursor: default;
-      }
     }
   }
 </style>
