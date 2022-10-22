@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="buttons">
-      <my-button @click="showDialog">Create new</my-button>
+      <my-button @click="showDialog">Create new post</my-button>
       <my-select v-model="selectedSort" :options="sortOptions">
       </my-select>
     </div>

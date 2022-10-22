@@ -4,7 +4,7 @@
     <div><strong>Desc: </strong>{{ post.body}}</div>
     <div class="btns">
       <my-button @click="$emit('remove', post)">
-        Del
+        Delete
       </my-button>
     </div>
   </div>
