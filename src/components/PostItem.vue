@@ -1,6 +1,9 @@
 <template>
   <div class="post">
-    <div><strong>Name: </strong>{{ post.id}} {{ post.title}}</div>
+    <div>
+      <strong>Name: </strong>{{ post.id}}
+      <a @click="$router.push(`/posts/${post.id}`)">{{ post.title}}</a>
+    </div>
     <div><strong>Desc: </strong>{{ post.body}}</div>
     <div class="btns">
       <my-button @click="$emit('remove', post)">
@@ -27,6 +30,11 @@ export default {
     padding: 10px;
     margin: 0 0 10px 0;
     border: 1px solid #a7bed4;
+
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+    }
 
     .name {
       font-size: 14px;
