@@ -7,6 +7,8 @@ import directives from '@/directives';
 import router from '@/router/router';
 import store from '@/store';
 
+import VueEasyLightbox from 'vue-easy-lightbox';
+
 components.forEach((component) => {
   app.component(component.name, component);
 });
@@ -15,4 +17,4 @@ directives.forEach((directive) => {
   app.directive(directive.name, directive);
 });
 
-app.use(router).use(store).mount('#app');
+app.use(router, store, VueEasyLightbox).mount('#app');
