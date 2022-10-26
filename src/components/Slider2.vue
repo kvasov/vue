@@ -28,7 +28,6 @@
     </swiper>
 
     <swiper
-      :modules="[Controller]"
       @swiper="setSecondSwiper"
       :controller="{ control: firstSwiper }"
       :loop="true"
@@ -54,6 +53,10 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
+    Controller,
+    EffectFade,
+    Navigation,
+    Pagination,
   },
   data: {
     firstSwiper: null,

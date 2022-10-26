@@ -5,6 +5,7 @@
       :modules="[Controller, EffectFade, Navigation, Pagination]"
       @swiper="setFirstSwiper"
       @slideChange="changeIt"
+      @afterInit="changeIt"
       :controller="{ control: secondSwiper }"
       :loop="true"
       :effect="'fade'"
@@ -43,7 +44,7 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Controller, EffectFade, Navigation, Pagination } from 'swiper';
 
@@ -64,6 +65,7 @@ export default {
     SwiperSlide,
   },
   setup() {
+    const emit = defineEmits(['update']);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
     const setFirstSwiper = (swiper) => {
@@ -72,8 +74,10 @@ export default {
     const setSecondSwiper = (swiper) => {
       secondSwiper.value = swiper;
     };
-    const changeIt = () => {
+    const changeIt = (swiper) => {
       console.log('change');
+      console.log(swiper.activeIndex);
+      emit('update');
     };
 
     return {
